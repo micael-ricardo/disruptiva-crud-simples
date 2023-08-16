@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Cidade extends Model
 {
     use HasFactory;
-    protected $table = 'cidade';
     protected $fillable = ['nome'];
 
     public function enderecos()
