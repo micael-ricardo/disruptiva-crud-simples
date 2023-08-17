@@ -1,3 +1,21 @@
+// Validar Email
+function validar_email(email) {
+    const regex = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,}(\.[a-zA-Z]{2,})?$/; 
+    return regex.test(email);
+}
+$(document).ready(function () {
+    $('#email').on('blur', function () {
+        console.log('Entrou');
+        const email = $(this).val();
+        if (validar_email(email)) {
+            toastr.success("E-mail válido!");
+        } else {
+            toastr.error("E-mail inválido!");
+        }
+    });
+});
+
+// Limpar Campos
 $(document).ready(function () {
     $('#limparCampos').click(function () {
         $('input[type="text"]').val('');
@@ -8,6 +26,7 @@ $(document).ready(function () {
     });
 });
 
+// CEP
 $(document).ready(function () {
     $("#BuscaCep").click(function () {
         var cep = $("#cep").val();
@@ -34,8 +53,28 @@ $(document).ready(function () {
         }
     });
 });
-
-
 $(document).ready(function () {
     $('#cep').inputmask('99.999-999');
+});
+
+// Select TipoLogradouros
+$(document).ready(function() {
+    $.get("/get-tipos-logradouros", function(data) {
+        const select = $("#tipo_logradouro");
+        
+        $.each(data, function(index, tipo) {
+            select.append(new Option(tipo.nome, tipo.id));
+        });
+    });
+});
+
+// Select Cidades
+$(document).ready(function() {
+    $.get("/get-cidades", function(data) {
+        const select = $("#cidade");
+        
+        $.each(data, function(index, tipo) {
+            select.append(new Option(tipo.nome, tipo.id));
+        });
+    });
 });

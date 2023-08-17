@@ -79,8 +79,10 @@
                         </div>
                         <div class="row">
                             <div class="form-group col-md-3">
-                                <label for="TipoLogradouro">Tipo Logradouro:<span class="text-danger">*</span></label>
-                                <input type="text" name="TipoLogradouro" id="TipoLogradouro" class="form-control">
+                                <label for="tipo_logradouro">Tipo de Logradouro: <span class="text-danger">*</span></label>
+                                <select  name="tipo_logradouro" id="tipo_logradouro" class="form-control">
+                                    <option value="">Escolha uma opção</option>
+                                </select>
                             </div>
 
                             <div class="form-group col-md-3">
@@ -89,7 +91,7 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="Numero">Número:<span class="text-danger">*</span></label>
+                                    <label for="numero">Número:<span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="numero" id="numero" required>
                                 </div>
                             </div>
@@ -98,8 +100,10 @@
                                 <input type="text" name="bairro" id="bairro" class="form-control">
                             </div>
                             <div class="form-group col-md-3">
-                                <label for="Cidade">Cidade:<span class="text-danger">*</span></label>
-                                <input type="text" name="Cidade" id="Cidade" class="form-control">
+                                <label for="cidade">Cidade:<span class="text-danger">*</span></label>
+                                <select  name="cidade" id="cidade" class="form-control">
+                                    <option value="">Escolha uma opção</option>
+                                </select>
                             </div>
 
                         </div>

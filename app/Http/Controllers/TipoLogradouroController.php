@@ -1,10 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
+use App\Models\TipoLogradouro;
 
 class TipoLogradouroController extends Controller
 {
-    //
+    public function getTiposLogradouros()
+    {
+        $tiposLogradouros = TipoLogradouro::all();
+        return response()->json($tiposLogradouros);
+    }
 }
