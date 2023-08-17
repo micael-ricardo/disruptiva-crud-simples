@@ -1,23 +1,7 @@
 @extends('template/layout')
 @section('title', 'Cadastrar Pessoas')
 @section('conteudo')
-
-    <style>
-        .card-title {
-            margin-top: -12px;
-            padding: 0 10px;
-        }
-
-        .card-title span {
-            background-color: white;
-            position: relative;
-        }
-
-        .card-subtitle {
-            font-size: 12px;
-        }
-    </style>
-
+    <link rel="stylesheet" href="{{ asset('css/cadastro.css') }}">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -68,8 +52,9 @@
                                     <input type="password" class="form-control" id="senha" name="senha" required>
                                 </div>
                                 <div class="form-group col-md-3">
-                                    <label for="senha">Confirmar Senha:</label>
-                                    <input type="password" class="form-control" id="senha" name="senha" required>
+                                    <label for="confirma_senha">Confirmar Senha:</label>
+                                    <input type="password" class="form-control" id="confirma_senha" name="confirma_senha"
+                                        required>
                                 </div>
                             </div>
                     </div>
@@ -103,8 +88,8 @@
                                 </div>
                             </div>
                             <div class="form-group col-md-3">
-                                <label for="nome_bairro">Bairro:</label>
-                                <input type="text" name="rua" id="rua" class="form-control">
+                                <label for="bairro">Bairro:</label>
+                                <input type="text" name="bairro" id="bairro" class="form-control">
                             </div>
                             <div class="form-group col-md-3">
                                 <label for="Cidade">Cidade:<span class="text-danger">*</span></label>
@@ -117,10 +102,10 @@
             </div>
             <div class="col-md-12 mt-4">
                 <button type="submit" class="btn btn-success"><i class="bi bi-save"></i> Salvar </button>
-                <button id="limparCampos" class="btn btn-secondary">Limpar</button>
-                <a class="btn btn-danger"><i class="bi bi-x-lg"></i>Cancelar</a>
-            </div>  
+                <button id="limparCampos" class="btn btn-secondary"><i class="bi bi-eraser-fill"></i> Limpar</button>
+                <a href="{{ route('listar') }}" class="btn btn-danger"><i class="bi bi-x-lg"></i> Cancelar</a>
+            </div>
         </div>
     </div>
-
+    <script src="{{ asset('js/cadastro.js') }}"></script>
 @endsection

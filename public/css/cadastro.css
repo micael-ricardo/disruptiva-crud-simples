@@ -1,0 +1,13 @@
+.card-title {
+    margin-top: -12px;
+    padding: 0 10px;
+}
+
+.card-title span {
+    background-color: white;
+    position: relative;
+}
+
+.card-subtitle {
+    font-size: 12px;
+}

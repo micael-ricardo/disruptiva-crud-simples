@@ -6,7 +6,7 @@
 
     <div class="input-group mb-3">
         <div class="input-group-append">
-            <a class="btn btn-success"> Novo <i class="bi bi-plus"></i> </a>
+            <a href="{{ route('cadastrar') }}" class="btn btn-success"> Novo <i class="bi bi-plus"></i> </a>
         </div>
     </div>
 
