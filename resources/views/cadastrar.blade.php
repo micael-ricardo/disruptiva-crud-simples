@@ -67,6 +67,7 @@
                     </div>
                     <div class="card-body">
                         <form id="endereco-form"  method="POST">
+                            @csrf
                             <div class="row mb-2">
                                 <div class="form-group col-md-3">
                                     <label for="cep">Cep:</label>
@@ -81,14 +82,14 @@
                                 <div class="form-group col-md-3">
                                     <label for="tipo_logradouro">Tipo de Logradouro: <span
                                             class="text-danger">*</span></label>
-                                    <select name="tipo_logradouro" id="tipo_logradouro" class="form-control">
+                                    <select name="tipo_logradouro_id" id="tipo_logradouro" class="form-control">
                                         <option value="">Escolha uma opção</option>
                                     </select>
                                 </div>
 
                                 <div class="form-group col-md-3">
-                                    <label for="rua">Logradouro:<span class="text-danger">*</span></label>
-                                    <input type="text" name="rua" id="rua" class="form-control">
+                                    <label for="logradouro">Logradouro:<span class="text-danger">*</span></label>
+                                    <input type="text" name="logradouro" id="logradouro" class="form-control">
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
@@ -102,7 +103,7 @@
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label for="cidade">Cidade:<span class="text-danger">*</span></label>
-                                    <select name="cidade" id="cidade" class="form-control">
+                                    <select name="cidade_id" id="cidade" class="form-control">
                                         <option value="">Escolha uma opção</option>
                                     </select>
                                 </div>

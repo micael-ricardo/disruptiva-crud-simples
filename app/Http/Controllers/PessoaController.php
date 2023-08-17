@@ -20,7 +20,7 @@ class PessoaController extends Controller
             $model = Pessoa::create($validatedData);
             return response()->json($model, 201);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Erro ao cadastrar pessoa'], 422);
+            return response()->json(['message' => 'Erro ao cadastrar pessoa: ' . $e->getMessage()], 422);
         }
     }
 }

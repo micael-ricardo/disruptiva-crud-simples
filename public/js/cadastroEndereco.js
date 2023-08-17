@@ -1,4 +1,11 @@
-
+// Cadastrar Endereco
+function cadastrarEndereco(pessoaId) {
+    const dadosEndereco = $('#endereco-form').serialize() + '&pessoa_id=' + pessoaId;
+    $.post('/cadastrar-endereco', dadosEndereco, function (response) {
+        toastr.success('cadastrado com sucesso!');
+        window.location.href = '/';
+    });
+}
 $(document).ready(function () {
     // CEP
     $("#BuscaCep").click(function () {
@@ -12,7 +19,7 @@ $(document).ready(function () {
                 success: function (data) {
                     if (!data.erro) {
                         $("#bairro").val(data.bairro);
-                        $("#rua").val(data.logradouro);
+                        $("#logradouro").val(data.logradouro);
                     } else {
                         toastr.error('CEP não encontrado.');
                     }
@@ -27,7 +34,7 @@ $(document).ready(function () {
     });
     //Mascara  Cep
     $('#cep').inputmask('99.999-999');
-    
+
     // Select TipoLogradouros
     $.get("/get-tipos-logradouros", function (data) {
         const select = $("#tipo_logradouro");
@@ -41,5 +48,10 @@ $(document).ready(function () {
         $.each(data, function (index, tipo) {
             select.append(new Option(tipo.nome, tipo.id));
         });
+    });
+    // Cadastrar Endereco
+    $('#salvar').click(function (event) {
+        event.preventDefault();
+        cadastrarEndereco(pessoaId); 
     });
 });

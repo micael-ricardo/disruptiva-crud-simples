@@ -1,3 +1,6 @@
+// Variável global
+let pessoaId;
+
 // Validar Email
 function validar_email(email) {
     const regex = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,}(\.[a-zA-Z]{2,})?$/;
@@ -23,9 +26,33 @@ function validarFormulario() {
     }
     return true;
 }
+// Função para verificar se o endereço está preenchido
+function verificarEnderecoPreenchido() {
+    const cep = $('#cep').val();
+    const tipo_logradouro = $('#tipo_logradouro').val();
+    const logradouro = $('#logradouro').val();
+    const numero = $('#numero').val();
+    const bairro = $('#bairro').val();
+    const cidade = $('#cidade').val();
+    return cep.trim() !== '' || tipo_logradouro.trim() !== '' || logradouro.trim() !== '' || numero.trim() !== '' || bairro.trim() !== '' || cidade.trim() !== '';
+}
+// Função para cadastrar pessoa
+function cadastrarPessoa() {
+    const dadosPessoa = $('#pessoa-form').serialize();
+    $.post('/cadastrar-pessoa', dadosPessoa, function (response) {
+        pessoaId = response.id;
+        const enderecoPreenchido = verificarEnderecoPreenchido();
+        if (enderecoPreenchido) {
+            cadastrarEndereco(pessoaId);
+        } else {
+            toastr.success('Dados da pessoa salvos com sucesso!');
+            window.location.href = '/';
+        }
+    });
+}
+// Validar Email
 $(document).ready(function () {
     $('#email').on('blur', function () {
-        console.log('Entrou');
         const email = $(this).val();
         if (validar_email(email)) {
             toastr.success("E-mail válido!");
@@ -33,18 +60,13 @@ $(document).ready(function () {
             toastr.error("E-mail inválido!");
         }
     });
-    // Cadastro Pessoa
+    // cadastrar pessoa
     $('#salvar').click(function (event) {
         event.preventDefault();
         if (!validarFormulario()) {
             return;
         }
-        const dadosPessoa = $('#pessoa-form').serialize();
-        $.post('/cadastrar-pessoa', dadosPessoa, function (response) {
-            console.log(response);
-            toastr.success('Pessoa cadastrada com sucesso!');
-            window.location.href = '/';
-        });
+        cadastrarPessoa();
     });
     // Limpar Campos
     $('#limparCampos').click(function () {
