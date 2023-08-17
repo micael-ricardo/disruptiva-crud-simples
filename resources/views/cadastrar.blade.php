@@ -10,10 +10,8 @@
                 <div class="card">
                     <h6 class="card-title "><span>Dados Pessoais</span></h6>
                     <div class="card-body">
-
-                        <form method="POST">
+                        <form id="pessoa-form" method="POST">
                             @csrf
-
                             <div class="row">
                                 <div class="form-group col-md-3">
                                     <label for="nome">Nome:<span class="text-danger">*</span></label>
@@ -53,10 +51,11 @@
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label for="confirma_senha">Confirmar Senha:</label>
-                                    <input type="password" class="form-control" id="confirma_senha" name="confirma_senha"
+                                    <input type="password" class="form-control" id="confirma_senha" name="senha_confirmation"
                                         required>
                                 </div>
                             </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -67,51 +66,53 @@
                                     informado, os campos com * são obrigatórios )</small></span></h6>
                     </div>
                     <div class="card-body">
-                        <div class="row mb-2">
-                            <div class="form-group col-md-3">
-                                <label for="cep">Cep:</label>
-                                <input type="text" name="cep" id="cep" class="form-control cep">
-                            </div>
-                            <div class="form-group col-md-3 mt-4">
-                                <button id="BuscaCep" class="btn btn-secondary"><i class="bi bi-search"></i> Busca pelo
-                                    cep</button>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-md-3">
-                                <label for="tipo_logradouro">Tipo de Logradouro: <span class="text-danger">*</span></label>
-                                <select  name="tipo_logradouro" id="tipo_logradouro" class="form-control">
-                                    <option value="">Escolha uma opção</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group col-md-3">
-                                <label for="rua">Logradouro:<span class="text-danger">*</span></label>
-                                <input type="text" name="rua" id="rua" class="form-control">
-                            </div>
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="numero">Número:<span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="numero" id="numero" required>
+                        <form id="endereco-form"  method="POST">
+                            <div class="row mb-2">
+                                <div class="form-group col-md-3">
+                                    <label for="cep">Cep:</label>
+                                    <input type="text" name="cep" id="cep" class="form-control cep">
+                                </div>
+                                <div class="form-group col-md-3 mt-4">
+                                    <button id="BuscaCep" class="btn btn-secondary"><i class="bi bi-search"></i> Busca pelo
+                                        cep</button>
                                 </div>
                             </div>
-                            <div class="form-group col-md-3">
-                                <label for="bairro">Bairro:</label>
-                                <input type="text" name="bairro" id="bairro" class="form-control">
-                            </div>
-                            <div class="form-group col-md-3">
-                                <label for="cidade">Cidade:<span class="text-danger">*</span></label>
-                                <select  name="cidade" id="cidade" class="form-control">
-                                    <option value="">Escolha uma opção</option>
-                                </select>
-                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-3">
+                                    <label for="tipo_logradouro">Tipo de Logradouro: <span
+                                            class="text-danger">*</span></label>
+                                    <select name="tipo_logradouro" id="tipo_logradouro" class="form-control">
+                                        <option value="">Escolha uma opção</option>
+                                    </select>
+                                </div>
 
-                        </div>
+                                <div class="form-group col-md-3">
+                                    <label for="rua">Logradouro:<span class="text-danger">*</span></label>
+                                    <input type="text" name="rua" id="rua" class="form-control">
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="numero">Número:<span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" name="numero" id="numero">
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="bairro">Bairro:</label>
+                                    <input type="text" name="bairro" id="bairro" class="form-control">
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="cidade">Cidade:<span class="text-danger">*</span></label>
+                                    <select name="cidade" id="cidade" class="form-control">
+                                        <option value="">Escolha uma opção</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
             <div class="col-md-12 mt-4">
-                <button type="submit" class="btn btn-success"><i class="bi bi-save"></i> Salvar </button>
+                <button id="salvar" class="btn btn-success"><i class="bi bi-save"></i> Salvar </button>
                 <button id="limparCampos" class="btn btn-secondary"><i class="bi bi-eraser-fill"></i> Limpar</button>
                 <a href="{{ route('listar') }}" class="btn btn-danger"><i class="bi bi-x-lg"></i> Cancelar</a>
             </div>
