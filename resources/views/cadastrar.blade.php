@@ -73,7 +73,7 @@
                                     <input type="text" name="cep" id="cep" class="form-control cep">
                                 </div>
                                 <div class="form-group col-md-3 mt-4">
-                                    <button id="BuscaCep" class="btn btn-secondary"><i class="bi bi-search"></i> Busca pelo
+                                    <button type="button" id="BuscaCep" class="btn btn-secondary"><i class="bi bi-search"></i> Busca pelo
                                         cep</button>
                                 </div>
                             </div>
@@ -118,5 +118,6 @@
             </div>
         </div>
     </div>
-    <script src="{{ asset('js/cadastro.js') }}"></script>
+    <script src="{{ asset('js/cadastroPessoa.js') }}"></script>
+    <script src="{{ asset('js/cadastroEndereco.js') }}"></script>
 @endsection
