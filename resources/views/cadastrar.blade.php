@@ -67,11 +67,17 @@
                                     informado, os campos com * são obrigatórios )</small></span></h6>
                     </div>
                     <div class="card-body">
-                        <div class="row">
-                            <div class="form-group col-md-12">
+                        <div class="row mb-2">
+                            <div class="form-group col-md-3">
                                 <label for="cep">Cep:</label>
                                 <input type="text" name="cep" id="cep" class="form-control cep">
                             </div>
+                            <div class="form-group col-md-3 mt-4">
+                                <button id="BuscaCep" class="btn btn-secondary"><i class="bi bi-search"></i> Busca pelo
+                                    cep</button>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="form-group col-md-3">
                                 <label for="TipoLogradouro">Tipo Logradouro:<span class="text-danger">*</span></label>
                                 <input type="text" name="TipoLogradouro" id="TipoLogradouro" class="form-control">
