@@ -1,6 +1,5 @@
 // Variável global
 let pessoaId;
-
 // Validar Email
 function validar_email(email) {
     const regex = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,}(\.[a-zA-Z]{2,})?$/;
