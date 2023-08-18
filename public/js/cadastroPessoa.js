@@ -30,13 +30,11 @@ function validarFormulario() {
 }
 // Função para verificar se os dados do  endereço está preenchido
 function verificarEnderecoPreenchido() {
-    const cep = $('#cep').val();
     const tipo_logradouro = $('#tipo_logradouro').val();
     const logradouro = $('#logradouro').val();
     const numero = $('#numero').val();
-    const bairro = $('#bairro').val();
     const cidade = $('#cidade').val();
-    return cep.trim() !== '' || tipo_logradouro.trim() !== '' || logradouro.trim() !== '' || numero.trim() !== '' || bairro.trim() !== '' || cidade.trim() !== '';
+    return  tipo_logradouro.trim() !== '' || logradouro.trim() !== '' || numero.trim() !== '' || cidade.trim() !== '';
 }
 // Função para cadastrar pessoa
 function cadastrarPessoa() {
@@ -60,8 +58,6 @@ function cadastrarPessoa() {
     });
 }
 
-
-
 // Função para atualizar pessoa
 function atualizarPessoa() {
     const dadosPessoa = $('#pessoa-form').serialize();
@@ -73,23 +69,17 @@ function atualizarPessoa() {
         success: function (response) {
             toastr.success('Dados da pessoa atualizados com sucesso!');
             window.location.href = '/';
-            pessoaUpdateSuccess = true;
+            atualizacaoPessoaSucesso = true;
         },
         error: function (xhr, textStatus, errorThrown) {
             var errorMessage = xhr.responseJSON.message;
             if (xhr.status === 422) {
                 toastr.error(errorMessage);
             } else {
-                toastr.error('Ocorreu um erro ao cadastrar a pessoa. Por favor, tente novamente mais tarde.');
+                toastr.error('Ocorreu um erro ao atualizar a pessoa. Por favor, tente novamente mais tarde.');
             }
-            pessoaUpdateSuccess = false;
             return;
         },
-        complete: function () {
-            if (typeof callback === 'function') {
-                callback();
-            }
-        }
     });
 }
 

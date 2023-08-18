@@ -33,20 +33,38 @@ function salvarEndereco(pessoaId, enderecoId, pessoaUpdateId) {
                 window.location.href = '/';
             },
             error: function (xhr, textStatus, errorThrown) {
-                console.log(xhr, textStatus, errorThrown);
+                var errorMessage = xhr.responseJSON.message;
+                if (xhr.status === 422) {
+                    toastr.error(errorMessage);
+                }
             }
         });
     } else {
+        toastr.error('Ocorreu um erro ao atualizar a pessoa. O update de endereço foi abortado.');
         if (pessoaId) {
             $.post('/cadastrar-endereco', dadosEnderecoCadastro, function (response) {
                 toastr.success('Cadastrado com sucesso!');
                 window.location.href = '/';
+            }).fail(function (xhr, textStatus, errorThrown) {
+                var errorMessage = xhr.responseJSON.message;
+                if (xhr.status === 422) {
+                    toastr.error(errorMessage);
+                } else {
+                    toastr.error('Ocorreu um erro ao cadastrar endereço. Por favor, tente novamente mais tarde.');
+                }
             });
         } else {
             if (pessoaUpdateId) {
                 $.post('/cadastrar-endereco', dadosEndereco, function (response) {
                     toastr.success('Cadastrado com sucesso!');
                     window.location.href = '/';
+                }).fail(function (xhr, textStatus, errorThrown) {
+                    var errorMessage = xhr.responseJSON.message;
+                    if (xhr.status === 422) {
+                        toastr.error(errorMessage);
+                    } else {
+                        toastr.error('Ocorreu um erro ao cadastrar endereço. Por favor, tente novamente mais tarde.');
+                    }
                 });
             }
         }

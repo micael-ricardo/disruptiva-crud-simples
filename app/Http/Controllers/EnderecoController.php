@@ -19,6 +19,20 @@ class EnderecoController extends Controller
                 'numero' => 'nullable|string|max:10',
                 'bairro' => 'nullable|string|max:60',
                 'cidade_id' => 'required|integer',
+            ], [
+                'pessoa_id.required' => 'O campo pessoa_id é obrigatório.',
+                'pessoa_id.integer' => 'O campo pessoa_id deve ser um número inteiro.',
+                'cep.nullable' => 'O campo CEP deve ser nulo ou estar no formato correto.',
+                'tipo_logradouro_id.required' => 'O campo tipo_logradouro_id é obrigatório.',
+                'tipo_logradouro_id.integer' => 'O campo tipo_logradouro_id deve ser um número inteiro.',
+                'logradouro.nullable' => 'O campo logradouro deve ser nulo ou estar no formato correto.',
+                'logradouro.max' => 'O campo logradouro deve ter no máximo 60 caracteres.',
+                'numero.nullable' => 'O campo número deve ser nulo ou estar no formato correto.',
+                'numero.max' => 'O campo número deve ter no máximo 10 caracteres.',
+                'bairro.nullable' => 'O campo bairro deve ser nulo ou estar no formato correto.',
+                'bairro.max' => 'O campo bairro deve ter no máximo 60 caracteres.',
+                'cidade_id.required' => 'O campo cidade é obrigatório.',
+                'cidade_id.integer' => 'O campo cidade_id deve ser um número inteiro.',
             ]);
             // Remover hífens e pontos do CEP
             $cep = str_replace(['-', '.'], '', $validatedData['cep']);
@@ -50,6 +64,20 @@ class EnderecoController extends Controller
                 'numero' => 'nullable|string|max:10',
                 'bairro' => 'nullable|string|max:60',
                 'cidade_id' => 'required|integer',
+            ], [
+                'pessoa_id.required' => 'O campo pessoa_id é obrigatório.',
+                'pessoa_id.integer' => 'O campo pessoa_id deve ser um número inteiro.',
+                'cep.nullable' => 'O campo CEP deve ser nulo ou estar no formato correto.',
+                'tipo_logradouro_id.required' => 'O campo tipo_logradouro_id é obrigatório.',
+                'tipo_logradouro_id.integer' => 'O campo tipo_logradouro_id deve ser um número inteiro.',
+                'logradouro.nullable' => 'O campo logradouro deve ser nulo ou estar no formato correto.',
+                'logradouro.max' => 'O campo logradouro deve ter no máximo 60 caracteres.',
+                'numero.nullable' => 'O campo número deve ser nulo ou estar no formato correto.',
+                'numero.max' => 'O campo número deve ter no máximo 10 caracteres.',
+                'bairro.nullable' => 'O campo bairro deve ser nulo ou estar no formato correto.',
+                'bairro.max' => 'O campo bairro deve ter no máximo 60 caracteres.',
+                'cidade_id.required' => 'O campo cidade é obrigatório.',
+                'cidade_id.integer' => 'O campo cidade_id deve ser um número inteiro.',
             ]);
             $cep = str_replace(['-', '.'], '', $validatedData['cep']);
             $validatedData['cep'] = $cep;
@@ -61,7 +89,7 @@ class EnderecoController extends Controller
 
             return response()->json(['message' => 'Endereco atualizado com sucesso'], 200);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Erro ao atualizar endereco: ' . $e->getMessage()], 500);
+            return response()->json(['message' => 'Erro ao atualizar endereco: ' . $e->getMessage()], 422);
         }
     }
 }
