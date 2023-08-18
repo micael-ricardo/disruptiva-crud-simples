@@ -1,5 +1,7 @@
 // Variável global
 let pessoaId;
+var pessoaUpdateSuccess = false;
+
 // Validar Email
 function validar_email(email) {
     const regex = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,}(\.[a-zA-Z]{2,})?$/;
@@ -39,7 +41,7 @@ function verificarEnderecoPreenchido() {
 // Função para cadastrar pessoa
 function cadastrarPessoa() {
     const dadosPessoa = $('#pessoa-form').serialize();
-    $.post('/cadastrar-pessoa', dadosPessoa, function (response) {
+    $.post('/cadastrar-pessoa', dadosPessoa, function (response, textStatus, xhr) {
         pessoaId = response.id;
         const enderecoPreenchido = verificarEnderecoPreenchido();
         if (enderecoPreenchido) {
@@ -48,33 +50,49 @@ function cadastrarPessoa() {
             toastr.success('Dados da pessoa salvos com sucesso!');
             window.location.href = '/';
         }
+    }).fail(function (xhr, textStatus, errorThrown) {
+        var errorMessage = xhr.responseJSON.message;
+        if (xhr.status === 422) {
+            toastr.error(errorMessage);
+        } else {
+            toastr.error('Ocorreu um erro ao cadastrar a pessoa. Por favor, tente novamente mais tarde.');
+        }
     });
 }
+
+
 
 // Função para atualizar pessoa
 function atualizarPessoa() {
     const dadosPessoa = $('#pessoa-form').serialize();
     var pessoaId = $("#pessoa_id").val();
-    const enderecoPreenchido = verificarEnderecoPreenchido();
-
     $.ajax({
         url: "/update-pessoa/" + pessoaId,
         type: "PUT",
         data: dadosPessoa,
-
         success: function (response) {
-            if (enderecoPreenchido) {
-                salvarEndereco(pessoaId);
-            } else {
-                toastr.success('Dados da pessoa atualizados com sucesso!');
-                window.location.href = '/';
-            }
+            toastr.success('Dados da pessoa atualizados com sucesso!');
+            window.location.href = '/';
+            pessoaUpdateSuccess = true;
         },
         error: function (xhr, textStatus, errorThrown) {
-            console.log(xhr, textStatus, errorThrown);
+            var errorMessage = xhr.responseJSON.message;
+            if (xhr.status === 422) {
+                toastr.error(errorMessage);
+            } else {
+                toastr.error('Ocorreu um erro ao cadastrar a pessoa. Por favor, tente novamente mais tarde.');
+            }
+            pessoaUpdateSuccess = false;
+            return;
+        },
+        complete: function () {
+            if (typeof callback === 'function') {
+                callback();
+            }
         }
     });
 }
+
 
 $(document).ready(function () {
     // Validar Email
@@ -98,7 +116,6 @@ $(document).ready(function () {
         } else {
             cadastrarPessoa();
         }
-
     });
     // Limpar Campos
     $('#limparCampos').click(function () {

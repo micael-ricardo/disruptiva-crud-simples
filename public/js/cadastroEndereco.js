@@ -17,11 +17,13 @@ function validarFormularioEndereco() {
 // Cadastrar ou Atualizar Endereco
 function salvarEndereco(pessoaId, enderecoId, pessoaUpdateId) {
     const dadosEnderecoCadastro = $('#endereco-form').serialize() + '&pessoa_id=' + pessoaId;
-    if (!validarFormularioEndereco()) {
-        return;
+    if (pessoaId || enderecoId) {
+        if (!validarFormularioEndereco()) {
+            return;
+        }
     }
+    const dadosEndereco = $('#endereco-form').serialize() + '&pessoa_id=' + pessoaUpdateId;
     if (enderecoId) {
-        const dadosEndereco = $('#endereco-form').serialize() + '&pessoa_id=' + pessoaUpdateId;
         $.ajax({
             url: "/atualizar-endereco/" + enderecoId,
             type: "PUT",
@@ -35,12 +37,23 @@ function salvarEndereco(pessoaId, enderecoId, pessoaUpdateId) {
             }
         });
     } else {
-        $.post('/cadastrar-endereco', dadosEnderecoCadastro, function (response) {
-            toastr.success('Cadastrado com sucesso!');
-            window.location.href = '/';
-        });
+        if (pessoaId) {
+            $.post('/cadastrar-endereco', dadosEnderecoCadastro, function (response) {
+                toastr.success('Cadastrado com sucesso!');
+                window.location.href = '/';
+            });
+        } else {
+            if (pessoaUpdateId) {
+                $.post('/cadastrar-endereco', dadosEndereco, function (response) {
+                    toastr.success('Cadastrado com sucesso!');
+                    window.location.href = '/';
+                });
+            }
+        }
     }
 }
+
+
 $(document).ready(function () {
     // CEP
     $("#BuscaCep").click(function () {
