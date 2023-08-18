@@ -16,7 +16,7 @@ function validarFormulario() {
         toastr.error('Todos os campos são obrigatórios.');
         return false;
     }
-    if (!/^\d+$/.test(idade) ||idade <= 0) {
+    if (!/^\d+$/.test(idade) || idade <= 0) {
         toastr.error('A idade deve conter apenas números e tem que ser maior que 0.');
         return false;
     }
@@ -41,17 +41,43 @@ function cadastrarPessoa() {
     const dadosPessoa = $('#pessoa-form').serialize();
     $.post('/cadastrar-pessoa', dadosPessoa, function (response) {
         pessoaId = response.id;
-        const enderecoPreenchido = verificarEnderecoPreenchido();;
+        const enderecoPreenchido = verificarEnderecoPreenchido();
         if (enderecoPreenchido) {
-            cadastrarEndereco(pessoaId);
+            salvarEndereco(pessoaId);
         } else {
             toastr.success('Dados da pessoa salvos com sucesso!');
             window.location.href = '/';
         }
     });
 }
-// Validar Email
+
+// Função para atualizar pessoa
+function atualizarPessoa() {
+    const dadosPessoa = $('#pessoa-form').serialize();
+    var pessoaId = $("#pessoa_id").val();
+    const enderecoPreenchido = verificarEnderecoPreenchido();
+
+    $.ajax({
+        url: "/update-pessoa/" + pessoaId,
+        type: "PUT",
+        data: dadosPessoa,
+
+        success: function (response) {
+            if (enderecoPreenchido) {
+                salvarEndereco(pessoaId);
+            } else {
+                toastr.success('Dados da pessoa atualizados com sucesso!');
+                window.location.href = '/';
+            }
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            console.log(xhr, textStatus, errorThrown);
+        }
+    });
+}
+
 $(document).ready(function () {
+    // Validar Email
     $('#email').on('blur', function () {
         const email = $(this).val();
         if (validar_email(email)) {
@@ -63,10 +89,16 @@ $(document).ready(function () {
     // cadastrar pessoa
     $('#salvar').click(function (event) {
         event.preventDefault();
+        var pessoaId = $("#pessoa_id").val();
         if (!validarFormulario()) {
             return;
         }
-        cadastrarPessoa();
+        if (pessoaId) {
+            atualizarPessoa();
+        } else {
+            cadastrarPessoa();
+        }
+
     });
     // Limpar Campos
     $('#limparCampos').click(function () {

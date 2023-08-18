@@ -16,6 +16,11 @@
                     <div class="card-body">
                         <form id="pessoa-form" method="POST">
                             @csrf
+                            @if (isset($pessoa))
+                                @method('PUT')
+                                <input type="hidden" id="pessoa_id" name="pessoa_id"
+                                    value="{{ isset($pessoa) ? $pessoa->id : '' }}">
+                            @endif
                             <div class="row">
                                 <div class="form-group col-md-3">
                                     <label for="nome">Nome:<span class="text-danger">*</span></label>
@@ -78,6 +83,11 @@
                     <div class="card-body">
                         <form id="endereco-form" method="POST">
                             @csrf
+                            @if (isset($pessoa->enderecos))
+                                @method('PUT')
+                                <input type="hidden" name="endereco_id" id="endereco_id" value="{{ $pessoa->enderecos->id }}">
+                                {{-- <input type="hidden" name="pessoa_id_update" id="pessoa_id_update" value="{{ $pessoa->id }}"> --}}
+                            @endif
                             <div class="row mb-2">
                                 <div class="form-group col-md-3">
                                     <label for="cep">Cep:</label>

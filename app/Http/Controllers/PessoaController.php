@@ -32,6 +32,26 @@ class PessoaController extends Controller
         return view('cadastrar', compact('pessoa'));
     }
 
+    public function atualizarPessoa(Request $request, $id)
+    {
+        $request->merge(['pessoa_id' => $request->input('pessoa_endereco_Id')]);
+        try {
+            $validatedData = $request->validate([
+                'nome' => 'required|max:60',
+                'idade' => 'required|integer',
+                'email' => 'required|email|max:60',
+                'sexo' => 'nullable|in:M,F',
+                'senha' => 'required|min:6|confirmed',
+            ]);
+            $validatedData['senha'] = bcrypt($validatedData['senha']);
+            $model = Pessoa::findOrFail($id);
+            $model->update($validatedData);
+
+            return response()->json(['message' => 'Pessoa atualizado com sucesso'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Erro ao atualizar pessoa'], 500);
+        }
+    }
     public function deletePessoa($id)
     {
         try {

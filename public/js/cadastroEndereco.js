@@ -14,18 +14,32 @@ function validarFormularioEndereco() {
     }
     return true;
 }
-// Cadastrar Endereco
-function cadastrarEndereco(pessoaId) {
-    if (pessoaId) {
-        if (!validarFormularioEndereco()) {
-            return;
-        }
+// Cadastrar ou Atualizar Endereco
+function salvarEndereco(pessoaId, enderecoId, pessoaUpdateId) {
+    const dadosEnderecoCadastro = $('#endereco-form').serialize() + '&pessoa_id=' + pessoaId;
+    if (!validarFormularioEndereco()) {
+        return;
     }
-    const dadosEndereco = $('#endereco-form').serialize() + '&pessoa_id=' + pessoaId;
-    $.post('/cadastrar-endereco', dadosEndereco, function (response) {
-        toastr.success('cadastrado com sucesso!');
-        window.location.href = '/';
-    });
+    if (enderecoId) {
+        const dadosEndereco = $('#endereco-form').serialize() + '&pessoa_id=' + pessoaUpdateId;
+        $.ajax({
+            url: "/atualizar-endereco/" + enderecoId,
+            type: "PUT",
+            data: dadosEndereco,
+            success: function (response) {
+                toastr.success('Endereço atualizado com sucesso!');
+                window.location.href = '/';
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.log(xhr, textStatus, errorThrown);
+            }
+        });
+    } else {
+        $.post('/cadastrar-endereco', dadosEnderecoCadastro, function (response) {
+            toastr.success('Cadastrado com sucesso!');
+            window.location.href = '/';
+        });
+    }
 }
 $(document).ready(function () {
     // CEP
@@ -56,6 +70,17 @@ $(document).ready(function () {
     //Mascara  Cep
     $('#cep').inputmask('99.999-999');
 
+    // limpar todos os campos de endereço caso apage o cep 
+    $('#cep').on('blur', function () {
+        const cep = $(this).val();
+        if (cep === '') {
+            $('#logradouro').val('');
+            $('#numero').val('');
+            $('#bairro').val('');
+            $('select').prop('selectedIndex', 0);
+        }
+    });
+
     // Select TipoLogradouros
     $.get("/get-tipos-logradouros", function (data) {
         const select = $("#tipo_logradouro");
@@ -76,10 +101,11 @@ $(document).ready(function () {
             select.val(cidadeId);
         }
     });
-
-    // Cadastrar Endereco
+    // Cadastrar ou Atualizar Endereco
     $('#salvar').click(function (event) {
         event.preventDefault();
-        cadastrarEndereco(pessoaId);
+        const pessoaUpdateId = $("#pessoa_id").val();
+        const enderecoId = $("#endereco_id").val();
+        salvarEndereco(pessoaId, enderecoId, pessoaUpdateId);
     });
 });

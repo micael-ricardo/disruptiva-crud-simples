@@ -30,5 +30,10 @@ Route::post('/cadastrar-endereco', [EnderecoController::class, 'store'])->name('
 // Editar
 Route::get('/editar-pessoa/{id}/', [PessoaController::class, 'editarPessoa'])->name('editar-pessoa');
 
+// atualizar
+Route::put('/update-pessoa/{id}', [PessoaController::class, 'atualizarPessoa'])->name('update-pessoa');
+Route::match(['post', 'put'], '/atualizar-endereco/{enderecoId?}', [EnderecoController::class, 'atualizarEndereco'])->name('atualizar.endereco');
+
+
 // Deletar
 Route::delete('/delete-pessoas/{id}', [PessoaController::class, 'deletePessoa'])->name('delete-pessoas');
