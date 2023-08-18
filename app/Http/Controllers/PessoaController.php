@@ -24,6 +24,13 @@ class PessoaController extends Controller
         }
     }
 
+    public function editarPessoa($id)
+    {
+        $pessoa = Pessoa::with('enderecos')->find($id);
+        
+        return view('cadastrar', compact('pessoa'));
+    }
+
     public function deletePessoa($id)
     {
         try {

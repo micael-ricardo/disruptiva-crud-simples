@@ -27,5 +27,8 @@ Route::get('/get-data-table', [DataTableController::class, 'listar'])->name('get
 Route::post('/cadastrar-pessoa', [PessoaController::class, 'store'])->name('cadastrar-pessoa');
 Route::post('/cadastrar-endereco', [EnderecoController::class, 'store'])->name('cadastrar-endereco');
 
+// Editar
+Route::get('/editar-pessoa/{id}/', [PessoaController::class, 'editarPessoa'])->name('editar-pessoa');
+
 // Deletar
 Route::delete('/delete-pessoas/{id}', [PessoaController::class, 'deletePessoa'])->name('delete-pessoas');
