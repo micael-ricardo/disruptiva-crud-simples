@@ -1,5 +1,26 @@
+// Validar campos
+function validarFormularioEndereco() {
+    const tipo_logradouro = $('#tipo_logradouro').val();
+    const logradouro = $('#logradouro').val();
+    const numero = $('#numero').val();
+    const cidade = $('#cidade').val();
+    if (tipo_logradouro.trim() === '' || logradouro.trim() === '' || numero.trim() === '' || cidade.trim() === '') {
+        toastr.error('Todos os campos com * são obrigatórios.');
+        return false;
+    }
+    if (!/^\d+$/.test(numero) || numero <= 0) {
+        toastr.error('O Número deve conter apenas valores númericos e tem que ser maior que 0.');
+        return false;
+    }
+    return true;
+}
 // Cadastrar Endereco
 function cadastrarEndereco(pessoaId) {
+    if (pessoaId) {
+        if (!validarFormularioEndereco()) {
+            return;
+        }
+    }
     const dadosEndereco = $('#endereco-form').serialize() + '&pessoa_id=' + pessoaId;
     $.post('/cadastrar-endereco', dadosEndereco, function (response) {
         toastr.success('cadastrado com sucesso!');
@@ -41,7 +62,9 @@ $(document).ready(function () {
         $.each(data, function (index, tipo) {
             select.append(new Option(tipo.nome, tipo.id));
         });
-        select.val(tipo_logradouro_id);
+        if (typeof tipo_logradouro_id !== 'undefined') {
+            select.val(tipo_logradouro_id);
+        }
     });
     // Select Cidades
     $.get("/get-cidades", function (data) {
@@ -49,7 +72,9 @@ $(document).ready(function () {
         $.each(data, function (index, tipo) {
             select.append(new Option(tipo.nome, tipo.id));
         });
-        select.val(cidadeId);
+        if (typeof cidadeId !== 'undefined') {
+            select.val(cidadeId);
+        }
     });
 
     // Cadastrar Endereco

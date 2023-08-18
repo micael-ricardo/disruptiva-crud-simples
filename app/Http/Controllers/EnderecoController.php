@@ -13,7 +13,7 @@ class EnderecoController extends Controller
         try {
             $validatedData = $request->validate([
                 'pessoa_id' => 'required|integer',
-                'cep' => 'nullable|string|max:10',
+                'cep' => 'nullable',
                 'tipo_logradouro_id' => 'required|integer',
                 'logradouro' => 'nullable|string|max:60',
                 'numero' => 'nullable|string|max:10',

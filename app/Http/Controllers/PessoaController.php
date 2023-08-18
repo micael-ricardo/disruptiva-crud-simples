@@ -17,6 +17,8 @@ class PessoaController extends Controller
                 'sexo' => 'nullable|in:M,F',
                 'senha' => 'required|min:6|confirmed',
             ]);
+
+            $validatedData['senha'] = bcrypt($validatedData['senha']);
             $model = Pessoa::create($validatedData);
             return response()->json($model, 201);
         } catch (\Exception $e) {
@@ -27,7 +29,6 @@ class PessoaController extends Controller
     public function editarPessoa($id)
     {
         $pessoa = Pessoa::with('enderecos')->find($id);
-        
         return view('cadastrar', compact('pessoa'));
     }
 

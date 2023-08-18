@@ -16,8 +16,9 @@ function validarFormulario() {
         toastr.error('Todos os campos são obrigatórios.');
         return false;
     }
-    if (!/^\d+$/.test(idade)) {
-        toastr.error('A idade deve conter apenas números.');
+    if (!/^\d+$/.test(idade) ||idade <= 0) {
+        toastr.error('A idade deve conter apenas números e tem que ser maior que 0.');
+        return false;
     }
     if (senha !== confirmaSenha) {
         toastr.error('As senhas não coincidem.');
@@ -25,7 +26,7 @@ function validarFormulario() {
     }
     return true;
 }
-// Função para verificar se o endereço está preenchido
+// Função para verificar se os dados do  endereço está preenchido
 function verificarEnderecoPreenchido() {
     const cep = $('#cep').val();
     const tipo_logradouro = $('#tipo_logradouro').val();
@@ -40,7 +41,7 @@ function cadastrarPessoa() {
     const dadosPessoa = $('#pessoa-form').serialize();
     $.post('/cadastrar-pessoa', dadosPessoa, function (response) {
         pessoaId = response.id;
-        const enderecoPreenchido = verificarEnderecoPreenchido();
+        const enderecoPreenchido = verificarEnderecoPreenchido();;
         if (enderecoPreenchido) {
             cadastrarEndereco(pessoaId);
         } else {

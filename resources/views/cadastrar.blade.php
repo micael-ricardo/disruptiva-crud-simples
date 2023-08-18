@@ -55,7 +55,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                {{-- {{ var_dump($pessoa) }} --}}
                                 <div class="form-group col-md-3">
                                     <label for="senha">Senha:</label>
                                     <input type="password" class="form-control" id="senha" name="senha" required>
@@ -96,7 +95,7 @@
                                     <label for="tipo_logradouro">Tipo de Logradouro: <span
                                             class="text-danger">*</span></label>
                                     <select name="tipo_logradouro_id" id="tipo_logradouro" class="form-control">
-                                        <option {{ old('tipo_logradouro_id') }}>Escolha uma opção</option>
+                                        <option {{ old('tipo_logradouro_id') }} value="">Escolha uma opção</option>
                                     </select>
                                 </div>
 
@@ -108,7 +107,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="numero">Número:<span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="numero" id="numero"
+                                        <input type="number" class="form-control" name="numero" id="numero"
                                             value="{{ old('numero', isset($pessoa->enderecos) ? $pessoa->enderecos->numero : '') }}"required>
                                     </div>
                                 </div>
@@ -120,7 +119,7 @@
                                 <div class="form-group col-md-3">
                                     <label for="cidade">Cidade:<span class="text-danger">*</span></label>
                                     <select name="cidade_id" id="cidade" class="form-control">
-                                        <option {{ old('cidade_id') }}>Escolha uma opção</option>
+                                        <option {{ old('cidade_id') }} value="">Escolha uma opção</option>
                                     </select>
                                 </div>
                             </div>
