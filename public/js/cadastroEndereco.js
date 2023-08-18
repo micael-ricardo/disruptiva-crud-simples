@@ -41,6 +41,7 @@ $(document).ready(function () {
         $.each(data, function (index, tipo) {
             select.append(new Option(tipo.nome, tipo.id));
         });
+        select.val(tipo_logradouro_id);
     });
     // Select Cidades
     $.get("/get-cidades", function (data) {
@@ -48,10 +49,12 @@ $(document).ready(function () {
         $.each(data, function (index, tipo) {
             select.append(new Option(tipo.nome, tipo.id));
         });
+        select.val(cidadeId);
     });
+
     // Cadastrar Endereco
     $('#salvar').click(function (event) {
         event.preventDefault();
-        cadastrarEndereco(pessoaId); 
+        cadastrarEndereco(pessoaId);
     });
 });
