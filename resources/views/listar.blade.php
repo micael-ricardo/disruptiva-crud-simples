@@ -16,10 +16,10 @@
             <tr>
                 <th>Nome</th>
                 <th>Endereço</th>
-                {{-- <th>Idade</th>
+                <th>Idade</th>
                 <th>E-mail</th>
                 <th>Sexo</th>
-                <th>Ações</th> --}}
+                <th>Ação</th>
             </tr>
         </thead>
         <tbody>
@@ -27,52 +27,6 @@
     </table>
 
 
-    <script>
-        $(document).ready(function() {
-
-            var apiUrl = '/get-data-table';
-            var columns = [{
-                    data: 'id',
-                    className: 'text-center'
-                },
-                {
-                    data: 'nome'
-                },
-            ]
-            $('#pessoasTable').DataTable({
-                ajax: {
-                    url: apiUrl,
-                    method: 'GET',
-                },
-                columns: columns,
-                scrollX: true,
-                responsive: true,
-                language: {
-                    "sEmptyTable": "Nenhum registro encontrado",
-                    "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-                    "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
-                    "sInfoFiltered": "(Filtrados de _MAX_ registros)",
-                    "sInfoPostFix": "",
-                    "sInfoThousands": ".",
-                    "sLengthMenu": "_MENU_ resultados por página",
-                    "sLoadingRecords": "Carregando...",
-                    "sProcessing": "Processando...",
-                    "sZeroRecords": "Nenhum registro encontrado",
-                    "sSearch": "Pesquisar",
-                    "oPaginate": {
-                        "sNext": "Próximo",
-                        "sPrevious": "Anterior",
-                        "sFirst": "Primeiro",
-                        "sLast": "Último"
-                    }
-                },
-                lengthMenu: [
-                    [5, 10, 20, 50, -1],
-                    [5, 10, 20, 50, "Todos"]
-                ],
-                pageLength: 5
-            });
-        });
-    </script>
+    <script src="{{ asset('js/dataTable.js') }}"></script>
 
 @endsection
