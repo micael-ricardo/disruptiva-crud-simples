@@ -35,7 +35,8 @@ $(document).ready(function() {
             render: function(data, type, row) {
                 var nome = data.nome;
                 var btnEditar = '<a href="#" class="btn btn-info btn-sm btn-editar" data-id="' + data.id + '"><i class="bi bi-pencil"></i></a>';
-                var btnDeletar = '<button type="button"  data-id="' +  data.id + '" data-nome="' + nome +'" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button>';
+                var btnDeletar = '<button type="button" data-bs-target="#ModalDeletar" data-bs-toggle="modal" data-id="' +  data.id + '" data-nome="' + nome +
+                    '" class="btn btn-danger btn-sm excluir-pessoa"><i class="bi bi-trash"></i></button>';
                 return btnEditar + ' ' + btnDeletar;
             },
             className: 'text-center'

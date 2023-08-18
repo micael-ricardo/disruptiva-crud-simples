@@ -25,8 +25,30 @@
         <tbody>
         </tbody>
     </table>
-
-
+    {{-- Modal Delete --}}
+    <div class="modal fade" id="ModalDeletar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        role="dialog" aria-modal="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="exampleModalLabel">Excluir Pessoa</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div id="modal-body" class="modal-body">
+                    Tem certeza que deseja excluir: <b><span id="nome-pessoa"> </span></b> ? Esta ação
+                    não pode ser desfeita.
+                </div>
+                <div class="modal-footer">
+                    <form id="formExcluir" method="post">
+                        @csrf
+                        <input type="hidden" name="id">
+                        <button type="submit" class="btn btn-danger">Excluir</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="{{ asset('js/dataTable.js') }}"></script>
+    <script src="{{ asset('js/modalDelete.js') }}"></script>
 
 @endsection
