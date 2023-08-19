@@ -15,41 +15,41 @@ function validarFormularioEndereco() {
     return true;
 }
 // Cadastrar ou Atualizar Endereco
-function salvarEndereco(pessoaId, enderecoId, pessoaUpdateId) {
+function salvarEndereco(pessoaId) {
     const dadosEnderecoCadastro = $('#endereco-form').serialize() + '&pessoa_id=' + pessoaId;
-    if (pessoaId || enderecoId) {
-        if (!validarFormularioEndereco()) {
-            return;
-        }
-    }
-    const dadosEndereco = $('#endereco-form').serialize() + '&pessoa_id=' + pessoaUpdateId;
-    if (enderecoId) {
-        $.ajax({
-            url: "/atualizar-endereco/" + enderecoId,
-            type: "PUT",
-            data: dadosEndereco,
-            success: function (response) {
-                toastr.success('Endereço atualizado com sucesso!');
-                window.location.href = '/';
-            },
-            error: function (xhr, textStatus, errorThrown) {
-                var errorMessage = xhr.responseJSON.message;
-                if (xhr.status === 422) {
-                    toastr.error(errorMessage);
-                }
+    if (pessoaId) {
+        $.post('/cadastrar-endereco', dadosEnderecoCadastro, function (response) {
+            toastr.success('Cadastrado com sucesso!');
+            window.location.href = '/';
+        }).fail(function (xhr, textStatus, errorThrown) {
+            var errorMessage = xhr.responseJSON.message;
+            if (xhr.status === 422) {
+                toastr.error(errorMessage);
+            } else {
+                toastr.error('Ocorreu um erro ao cadastrar endereço. Por favor, tente novamente mais tarde.');
             }
         });
+    }
+}
+function atualizarEndereco(enderecoId, pessoaUpdateId) {
+    const dadosEndereco = $('#endereco-form').serialize() + '&pessoa_id=' + pessoaUpdateId;
+    if (!validarFormularioEndereco()) {
+        return;
     } else {
-        if (pessoaId) {
-            $.post('/cadastrar-endereco', dadosEnderecoCadastro, function (response) {
-                toastr.success('Cadastrado com sucesso!');
-                window.location.href = '/';
-            }).fail(function (xhr, textStatus, errorThrown) {
-                var errorMessage = xhr.responseJSON.message;
-                if (xhr.status === 422) {
-                    toastr.error(errorMessage);
-                } else {
-                    toastr.error('Ocorreu um erro ao cadastrar endereço. Por favor, tente novamente mais tarde.');
+        if (enderecoId) {
+            $.ajax({
+                url: "/atualizar-endereco/" + enderecoId,
+                type: "PUT",
+                data: dadosEndereco,
+                success: function (response) {
+                    toastr.success('Endereço atualizado com sucesso!');
+                    window.location.href = '/';
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    var errorMessage = xhr.responseJSON.message;
+                    if (xhr.status === 422) {
+                        toastr.error(errorMessage);
+                    }
                 }
             });
         } else {
@@ -69,7 +69,6 @@ function salvarEndereco(pessoaId, enderecoId, pessoaUpdateId) {
         }
     }
 }
-
 
 $(document).ready(function () {
     // CEP
@@ -136,6 +135,11 @@ $(document).ready(function () {
         event.preventDefault();
         const pessoaUpdateId = $("#pessoa_id").val();
         const enderecoId = $("#endereco_id").val();
-        salvarEndereco(pessoaId, enderecoId, pessoaUpdateId);
+        salvarEndereco(pessoaId);
+        atualizarPessoa(function (success) {
+            if (success) {
+                atualizarEndereco(enderecoId, pessoaUpdateId)
+            }
+        });
     });
 });
