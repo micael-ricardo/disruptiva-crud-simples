@@ -38,25 +38,25 @@ function verificarEnderecoPreenchido() {
 }
 // Função para cadastrar pessoa
 function cadastrarPessoa() {
-    const dadosPessoa = $('#pessoa-form').serialize();
-    $.post('/cadastrar-pessoa', dadosPessoa, function (response, textStatus, xhr) {
-        pessoaId = response.id;
-        const enderecoPreenchido = verificarEnderecoPreenchido();
-        if (enderecoPreenchido) {
-            salvarEndereco(pessoaId);
-        } else {
-            toastr.success('Dados da pessoa salvos com sucesso!');
-            window.location.href = '/';
-        }
-    }).fail(function (xhr, textStatus, errorThrown) {
-        var errorMessage = xhr.responseJSON.message;
-        if (xhr.status === 422) {
-            toastr.error(errorMessage);
-        } else {
-            toastr.error('Ocorreu um erro ao cadastrar a pessoa. Por favor, tente novamente mais tarde.');
-        }
-    });
-}
+        const dadosPessoa = $('#pessoa-form').serialize();
+        $.post('/cadastrar-pessoa', dadosPessoa, function (response, textStatus, xhr) {
+            pessoaId = response.id;
+            const enderecoPreenchido = verificarEnderecoPreenchido();
+            if (enderecoPreenchido) {
+                salvarEndereco(pessoaId);
+            } else {
+                toastr.success('Dados da pessoa salvos com sucesso!');
+                window.location.href = '/';
+            }
+        }).fail(function (xhr, textStatus, errorThrown) {
+            var errorMessage = xhr.responseJSON.message;
+            if (xhr.status === 422) {
+                toastr.error(errorMessage);
+            } else {
+                toastr.error('Ocorreu um erro ao cadastrar a pessoa. Por favor, tente novamente mais tarde.');
+            }
+        });
+    }
 
 // Função para atualizar pessoa
 function atualizarPessoa() {
