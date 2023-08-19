@@ -34,33 +34,48 @@ function verificarEnderecoPreenchido() {
     const logradouro = $('#logradouro').val();
     const numero = $('#numero').val();
     const cidade = $('#cidade').val();
-    return  tipo_logradouro.trim() !== '' || logradouro.trim() !== '' || numero.trim() !== '' || cidade.trim() !== '';
+    return tipo_logradouro.trim() !== '' || logradouro.trim() !== '' || numero.trim() !== '' || cidade.trim() !== '';
 }
 // Função para cadastrar pessoa
 function cadastrarPessoa() {
-        const dadosPessoa = $('#pessoa-form').serialize();
-        $.post('/cadastrar-pessoa', dadosPessoa, function (response, textStatus, xhr) {
-            pessoaId = response.id;
-            const enderecoPreenchido = verificarEnderecoPreenchido();
-            if (enderecoPreenchido) {
-                salvarEndereco(pessoaId);
-            } else {
-                toastr.success('Dados da pessoa salvos com sucesso!');
-                window.location.href = '/';
-            }
-        }).fail(function (xhr, textStatus, errorThrown) {
-            var errorMessage = xhr.responseJSON.message;
-            if (xhr.status === 422) {
-                toastr.error(errorMessage);
-            } else {
-                toastr.error('Ocorreu um erro ao cadastrar a pessoa. Por favor, tente novamente mais tarde.');
-            }
-        });
+    const dadosPessoa = $('#pessoa-form').serialize();
+    const enderecoPreenchido = verificarEnderecoPreenchido();
+    if (enderecoPreenchido) {
+        if (!validarFormularioEndereco()) {
+            toastr.error('Por favor, preencha corretamente o formulário de endereço.');
+            return;
+        }
     }
+    $.post('/cadastrar-pessoa', dadosPessoa, function (response, textStatus, xhr) {
+        pessoaId = response.id;
+       
+
+        if (enderecoPreenchido) {
+            salvarEndereco(pessoaId);
+        } else {
+            toastr.success('Dados da pessoa salvos com sucesso!');
+            window.location.href = '/';
+        }
+    }).fail(function (xhr, textStatus, errorThrown) {
+        var errorMessage = xhr.responseJSON.message;
+        if (xhr.status === 422) {
+            toastr.error(errorMessage);
+        } else {
+            toastr.error('Ocorreu um erro ao cadastrar a pessoa. Por favor, tente novamente mais tarde.');
+        }
+    });
+}
 
 // Função para atualizar pessoa
 function atualizarPessoa() {
     const dadosPessoa = $('#pessoa-form').serialize();
+    const enderecoPreenchido = verificarEnderecoPreenchido();
+    if (enderecoPreenchido) {
+        if (!validarFormularioEndereco()) {
+            toastr.error('Por favor, preencha corretamente o formulário de endereço.');
+            return;
+        }
+    }
     var pessoaId = $("#pessoa_id").val();
     $.ajax({
         url: "/update-pessoa/" + pessoaId,

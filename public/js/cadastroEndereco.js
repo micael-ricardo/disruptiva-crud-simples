@@ -40,7 +40,6 @@ function salvarEndereco(pessoaId, enderecoId, pessoaUpdateId) {
             }
         });
     } else {
-        toastr.error('Ocorreu um erro ao atualizar a pessoa. O update de endereço foi abortado.');
         if (pessoaId) {
             $.post('/cadastrar-endereco', dadosEnderecoCadastro, function (response) {
                 toastr.success('Cadastrado com sucesso!');
