@@ -12,7 +12,6 @@ use App\Http\Controllers\EnderecoController;
 Route::get('/', function () {
     return view('listar');
 })->name('listar');
-
 Route::get('/cadastrar', function () {
     return view('cadastrar');
 })->name('cadastrar');;
@@ -22,18 +21,13 @@ Route::get('/cadastrar', function () {
 Route::get('/get-tipos-logradouros', [TipoLogradouroController::class, 'getTiposLogradouros'])->name('get-tipos-logradouros');
 Route::get('/get-cidades', [CidadeController::class, 'getCidades'])->name('get-cidades');
 Route::get('/get-data-table', [DataTableController::class, 'listar'])->name('get-data-table');
-
 // Cadastrar
 Route::post('/cadastrar-pessoa', [PessoaController::class, 'store'])->name('cadastrar-pessoa');
 Route::post('/cadastrar-endereco', [EnderecoController::class, 'store'])->name('cadastrar-endereco');
-
 // Editar
 Route::get('/editar-pessoa/{id}/', [PessoaController::class, 'editarPessoa'])->name('editar-pessoa');
-
 // atualizar
 Route::put('/update-pessoa/{id}', [PessoaController::class, 'atualizarPessoa'])->name('update-pessoa');
 Route::match(['post', 'put'], '/atualizar-endereco/{enderecoId?}', [EnderecoController::class, 'atualizarEndereco'])->name('atualizar.endereco');
-
-
 // Deletar
 Route::delete('/delete-pessoas/{id}', [PessoaController::class, 'deletePessoa'])->name('delete-pessoas');
