@@ -76,7 +76,7 @@ class PessoaController extends Controller
 
             return response()->json(['message' => 'Pessoa atualizado com sucesso'], 200);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Erro ao cadastrar pessoa: ' . $e->getMessage()], 422);
+            return response()->json(['message' => 'Erro ao atualizar pessoa: ' . $e->getMessage()], 422);
         }
     }
     public function deletePessoa($id)

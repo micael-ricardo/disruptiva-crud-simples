@@ -1,7 +1,5 @@
 // Variável global
 let pessoaId;
-var pessoaUpdateSuccess = false;
-
 // Validar Email
 function validar_email(email) {
     const regex = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,}(\.[a-zA-Z]{2,})?$/;
@@ -36,6 +34,7 @@ function verificarEnderecoPreenchido() {
     const cidade = $('#cidade').val();
     return tipo_logradouro.trim() !== '' || logradouro.trim() !== '' || numero.trim() !== '' || cidade.trim() !== '';
 }
+
 // Função para cadastrar pessoa
 function cadastrarPessoa() {
     const dadosPessoa = $('#pessoa-form').serialize();
@@ -48,8 +47,6 @@ function cadastrarPessoa() {
     }
     $.post('/cadastrar-pessoa', dadosPessoa, function (response, textStatus, xhr) {
         pessoaId = response.id;
-       
-
         if (enderecoPreenchido) {
             salvarEndereco(pessoaId);
         } else {
@@ -67,7 +64,7 @@ function cadastrarPessoa() {
 }
 
 // Função para atualizar pessoa
-function atualizarPessoa() {
+function atualizarPessoa(callback) {
     const dadosPessoa = $('#pessoa-form').serialize();
     const enderecoPreenchido = verificarEnderecoPreenchido();
     if (enderecoPreenchido) {
@@ -77,25 +74,31 @@ function atualizarPessoa() {
         }
     }
     var pessoaId = $("#pessoa_id").val();
-    $.ajax({
-        url: "/update-pessoa/" + pessoaId,
-        type: "PUT",
-        data: dadosPessoa,
-        success: function (response) {
-            toastr.success('Dados da pessoa atualizados com sucesso!');
-            window.location.href = '/';
-            atualizacaoPessoaSucesso = true;
-        },
-        error: function (xhr, textStatus, errorThrown) {
-            var errorMessage = xhr.responseJSON.message;
-            if (xhr.status === 422) {
-                toastr.error(errorMessage);
-            } else {
-                toastr.error('Ocorreu um erro ao atualizar a pessoa. Por favor, tente novamente mais tarde.');
-            }
-            return;
-        },
-    });
+    if (pessoaId) {
+        $.ajax({
+            url: "/update-pessoa/" + pessoaId,
+            type: "PUT",
+            data: dadosPessoa,
+            success: function (response) {
+                toastr.success('Dados da pessoa atualizados com sucesso!');
+                window.location.href = '/';
+                if (typeof callback === 'function') {
+                    callback(true);
+                }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                var errorMessage = xhr.responseJSON.message;
+                if (xhr.status === 422) {
+                    toastr.error(errorMessage);
+                } else {
+                    toastr.error('Ocorreu um erro ao atualizar a pessoa. Por favor, tente novamente mais tarde.');
+                }
+                if (typeof callback === 'function') {
+                    callback(false);
+                }
+            },
+        });
+    }
 }
 
 
@@ -122,6 +125,7 @@ $(document).ready(function () {
             cadastrarPessoa();
         }
     });
+
     // Limpar Campos
     $('#limparCampos').click(function () {
         $('input[type="text"]').val('');
