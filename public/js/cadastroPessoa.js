@@ -35,6 +35,24 @@ function verificarEnderecoPreenchido() {
     return tipo_logradouro.trim() !== '' || logradouro.trim() !== '' || numero.trim() !== '' || cidade.trim() !== '';
 }
 
+// validar erros servidor
+function tratarErro(xhr) {
+    if (xhr && xhr.responseJSON) {
+        var errorMessage = xhr.responseJSON.message;
+        if (xhr.status === 422) {
+            toastr.error(errorMessage);
+        } else {
+            toastr.error('Ocorreu um erro ao cadastrar/atualizar pessoa. Por favor, tente novamente mais tarde.');
+        }
+    } else {
+        setTimeout(function () {
+            if (!toastr.active()) {
+                toastr.error('Ocorreu um erro desconhecido. Por favor, tente novamente mais tarde.');
+            }
+        }, 1000);
+    }
+}
+
 // Função para cadastrar pessoa
 function cadastrarPessoa() {
     const dadosPessoa = $('#pessoa-form').serialize();
@@ -54,12 +72,8 @@ function cadastrarPessoa() {
             window.location.href = '/';
         }
     }).fail(function (xhr, textStatus, errorThrown) {
-        var errorMessage = xhr.responseJSON.message;
-        if (xhr.status === 422) {
-            toastr.error(errorMessage);
-        } else {
-            toastr.error('Ocorreu um erro ao cadastrar a pessoa. Por favor, tente novamente mais tarde.');
-        }
+        tratarErro(xhr)
+        return;
     });
 }
 
@@ -87,15 +101,11 @@ function atualizarPessoa(callback) {
                 }
             },
             error: function (xhr, textStatus, errorThrown) {
-                var errorMessage = xhr.responseJSON.message;
-                if (xhr.status === 422) {
-                    toastr.error(errorMessage);
-                } else {
-                    toastr.error('Ocorreu um erro ao atualizar a pessoa. Por favor, tente novamente mais tarde.');
-                }
+                tratarErro(xhr)
                 if (typeof callback === 'function') {
                     callback(false);
                 }
+                return;
             },
         });
     }
@@ -112,9 +122,12 @@ $(document).ready(function () {
             toastr.error("E-mail inválido!");
         }
     });
+
+
     // cadastrar pessoa
     $('#salvar').click(function (event) {
         event.preventDefault();
+
         var pessoaId = $("#pessoa_id").val();
         if (!validarFormulario()) {
             return;

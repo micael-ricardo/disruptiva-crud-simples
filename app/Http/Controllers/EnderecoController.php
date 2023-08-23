@@ -13,7 +13,7 @@ class EnderecoController extends Controller
             $cep = str_replace(['-', '.'], '', $request['cep']);
             $request['cep'] = $cep;
 
-            $model = Endereco::create($request);
+            $model = Endereco::create($request->all());
             return response()->json($model, 201);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Erro ao cadastrar endereço: ' . $e->getMessage()], 422);
@@ -31,9 +31,9 @@ class EnderecoController extends Controller
             $cep = str_replace(['-', '.'], '', $request['cep']);
             $request['cep'] = $cep;
             if ($model) {
-                $model->update($request);
+                $model->update($request->all());
             } else {
-                Endereco::create($request);
+                Endereco::create($request->all());
             }
             return response()->json(['message' => 'Endereco atualizado com sucesso'], 200);
         } catch (\Exception $e) {
