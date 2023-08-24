@@ -2,7 +2,8 @@ $(document).ready(function() {
 
     var apiUrl = '/get-data-table';
     var columns = [{
-            data: 'nome'
+            data: 'nome',
+            orderable: true
         },
         {
             data: null,
@@ -15,13 +16,17 @@ $(document).ready(function() {
                 } else {
                     return '-';
                 }
-            }
+            },
+            orderable: false
         },
         {
-            data: 'idade'
+            data: 'idade',
+            orderable: true
         },
         {
-            data: 'email'
+            data: 'email',
+            orderable: false
+
         },
         {
             data: null,
@@ -29,6 +34,7 @@ $(document).ready(function() {
                var sexo = row.sexo === 'F' ? 'Feminino' : 'Masculino'
                return sexo;
             },
+            orderable: false
         },
         {
             data: null,
@@ -39,7 +45,8 @@ $(document).ready(function() {
                     '" class="btn btn-danger btn-sm excluir-pessoa"><i class="bi bi-trash"></i></button>';
                 return btnEditar + ' ' + btnDeletar;
             },
-            className: 'text-center'
+            className: 'text-center',
+            orderable: false
         }
     ]
     $('#pessoasTable').DataTable({
