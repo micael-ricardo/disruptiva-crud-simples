@@ -46,10 +46,13 @@ $(document).ready(function() {
         ajax: {
             url: apiUrl,
             method: 'GET',
+            dataSrc: 'data', 
         },
         columns: columns,
         scrollX: true,
         responsive: true,
+        serverSide: true,
+        processing: true,
         language: {
             "sEmptyTable": "Nenhum registro encontrado",
             "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
@@ -73,6 +76,6 @@ $(document).ready(function() {
             [5, 10, 20, 50, -1],
             [5, 10, 20, 50, "Todos"]
         ],
-        pageLength: 5
+        pageLength: 5, 
     });
 });
