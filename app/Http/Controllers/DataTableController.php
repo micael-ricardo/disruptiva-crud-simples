@@ -23,7 +23,6 @@ class DataTableController extends Controller
                 $query->where('nome', 'like', '%' . $searchValue . '%')
                     ->orWhere('idade', 'like', '%' . $searchValue . '%')
                     ->orWhere('email', 'like', '%' . $searchValue . '%')
-                    ->orWhere('sexo', 'like', '%' . $searchValue . '%')
                     ->orWhereHas('enderecos', function ($query) use ($searchValue) {
                         $query->where('logradouro', 'like', '%' . $searchValue . '%')
                             ->orWhere('bairro', 'like', '%' . $searchValue . '%')
